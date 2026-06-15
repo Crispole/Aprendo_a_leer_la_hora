@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Aprende la Hora!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Nunito:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <h1 class="logo">⏰ Aprende a leer la hora, Eloísa </h1>
+        <div id="score-container" class="score-badge">⭐ Puntos: <span id="score-val">0</span></div>
+    </header>
+
+    <div id="victory-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>🎉 ¡FELICIDADES! 🎉</h2>
+            <p>¡Has conseguido 10 estrellas! ¡Eres una experta leyendo la hora!</p>
+            <div id="confetti-canvas"></div>
+            <button class="btn btn-primary" onclick="resetGame()">Jugar Otra Vez</button>
+        </div>
+    </div>
+
+    <main id="app">
+        <!-- Contenido dinámico aquí -->
+        <section id="hero" class="step-section active">
+            <div class="content-wrapper">
+                <h2>¿Qué hora es?</h2>
+                <p>¡Vamos a aprender a leer el reloj juntos!</p>
+                <div class="clock-container" id="hero-clock"></div>
+                <button class="btn btn-primary" onclick="goToStep('step-hours')">¡Empezar!</button>
+            </div>
+        </section>
+
+        <!-- Paso 1: La Hora -->
+        <section id="step-hours" class="step-section">
+            <div class="content-wrapper">
+                <h2>1. La Aguja Corta</h2>
+                <p>La aguja <strong style="color: var(--color-orange)">CORTA</strong> señala la <strong>HORA</strong>.
+                </p>
+                <p>Mira, apunta al <span id="hour-display" style="font-size: 1.5em; font-weight: bold;">3</span>.</p>
+                <div class="clock-container" id="clock-hours"></div>
+                <div class="controls">
+                    <button class="btn btn-secondary" onclick="changeHour(-1)">⏪ Anterior</button>
+                    <button class="btn btn-secondary" onclick="changeHour(1)">Siguiente ⏩</button>
+                </div>
+                <br>
+                <button class="btn btn-primary" onclick="goToStep('step-minutes')">¡Entendido!</button>
+            </div>
+        </section>
+
+        <!-- Paso 2: Los Minutos -->
+        <section id="step-minutes" class="step-section">
+            <div class="content-wrapper">
+                <h2>2. La Aguja Larga</h2>
+                <p>La aguja <strong style="color: var(--color-sky)">LARGA</strong> señala los <strong>MINUTOS</strong>.
+                </p>
+                <p>¡Cuenta de 5 en 5! Ahora son las 3 y <span id="minute-display"
+                        style="font-size: 1.5em; font-weight: bold;">00</span>.</p>
+                <div class="clock-container" id="clock-minutes"></div>
+                <div class="controls">
+                    <button class="btn btn-secondary" onclick="changeMinute(-5)">⏪ -5 min</button>
+                    <button class="btn btn-secondary" onclick="changeMinute(5)">+5 min ⏩</button>
+                </div>
+                <br>
+                <button class="btn btn-primary" onclick="goToStep('step-practice')">¡A Practicar!</button>
+            </div>
+        </section>
+
+        <!-- Práctica -->
+        <section id="step-practice" class="step-section">
+            <div class="content-wrapper">
+                <h2>¡Tu Turno!</h2>
+                <p>Pon el reloj a las: <br><strong id="target-time"
+                        style="font-size: 2em; color: var(--color-grass)">---</strong></p>
+                <div class="clock-container" id="clock-practice"></div>
+                <div class="controls">
+                    <button class="btn btn-secondary" onclick="adjustPractice(-1, 0)">-1 Hora</button>
+                    <button class="btn btn-secondary" onclick="adjustPractice(1, 0)">+1 Hora</button>
+                    <br> <!-- Salto de línea para agrupar -->
+                    <button class="btn btn-secondary" onclick="adjustPractice(0, -5)">-5 Min</button>
+                    <button class="btn btn-secondary" onclick="adjustPractice(0, 5)">+5 Min</button>
+                </div>
+                <br>
+                <button class="btn btn-primary" onclick="checkAnswer()">¡Comprobar!</button>
+                <p id="feedback-msg" style="margin-top: 10px; font-weight: bold;"></p>
+                <br>
+                <button class="btn btn-secondary" onclick="goToStep('step-quiz')">Ir a Modo Quiz 🧠</button>
+            </div>
+        </section>
+
+        <!-- Quiz: ¿Qué hora es? -->
+        <section id="step-quiz" class="step-section">
+            <div class="content-wrapper">
+                <h2>¿Qué hora es?</h2>
+                <p>Mira el reloj y elige la opción correcta:</p>
+                <div class="clock-container" id="clock-quiz"></div>
+                <div id="quiz-options" class="quiz-grid">
+                    <!-- Los botones se generarán con JS -->
+                </div>
+                <p id="quiz-feedback" style="margin-top: 10px; font-weight: bold; min-height: 1.5em;"></p>
+                <br>
+                <button class="btn btn-secondary" onclick="goToStep('step-practice')">⬅ Volver a Practicar</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
